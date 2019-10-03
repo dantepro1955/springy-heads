@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
+//apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 android {
@@ -32,10 +32,11 @@ buildscript {
         maven { url 'https://plugins.gradle.org/m2/' }
         maven { url 'http://repo1.maven.org/maven2' }
         maven { url 'http://artifactory.nm.flipkart.com:8081/artifactory/libs-release-local' }
+        google()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.0.0-alpha1'
+        classpath 'com.android.tools.build:gradle:3.5.0'
         classpath 'com.github.dcendents:android-maven-plugin:1.+'
         classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:2.2.3'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.5'
@@ -47,7 +48,7 @@ version = VERSION_NAME
 status = STATUS
 
 apply plugin: 'artifactory'
-apply plugin: 'android-maven'
+//apply plugin: 'android-maven'
 
 configurations {
     published
@@ -65,7 +66,7 @@ artifactoryPublish {
 artifacts {
     published sourceJar
 }
-
+/*
 configure(install.repositories.mavenInstaller) {
     pom.project {
         licenses {
@@ -77,6 +78,7 @@ configure(install.repositories.mavenInstaller) {
         }
     }
 }
+*/
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.2.1'
@@ -106,7 +108,7 @@ artifactory {
     }
 }
 
-
+/*
 install {
     repositories.mavenInstaller {
         // This generates POM.xml with proper parameters
@@ -136,7 +138,7 @@ install {
         }
     }
 }
-
+*/
 dependencies {
 }
 
