@@ -1,14 +1,19 @@
 package com.flipkart.springyheads.demo;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -113,7 +118,13 @@ public class ChatHeadService extends Service {
     }
 
     private void moveToForeground() {
-        Notification notification = new NotificationCompat.Builder(this)
+        String channelId = "";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // If earlier version channel ID is not used
+            // https://developer.android.com/reference/android/support/v4/app/NotificationCompat.Builder.html#NotificationCompat.Builder(android.content.Context)
+            channelId = createNotificationChannel("Springy_heads_service", "Springy heads Service");
+        }
+        Notification notification = new NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.drawable.notification_template_icon_bg)
                 .setContentTitle("Springy heads")
                 .setContentText("Click to configure.")
@@ -121,6 +132,17 @@ public class ChatHeadService extends Service {
                 .build();
 
         startForeground(1, notification);
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private String createNotificationChannel(String channelId, String channelName){
+        NotificationChannel chan = new NotificationChannel(channelId,
+                channelName, NotificationManager.IMPORTANCE_NONE);
+        chan.setLightColor(Color.BLUE);
+        chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+        NotificationManager service = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        service.createNotificationChannel(chan);
+        return channelId;
     }
 
     public void addChatHead() {
