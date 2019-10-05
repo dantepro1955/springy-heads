@@ -95,8 +95,8 @@ public class MinimizedArrangement<T extends Serializable> extends ChatHeadArrang
         if (horizontalSpringChain != null || verticalSpringChain != null) {
             onDeactivate(maxWidth, maxHeight);
         }
-
-        MIN_VELOCITY_TO_POSITION_BACK = ChatHeadUtils.dpToPx(container.getDisplayMetrics(), 600);
+        // higher value of MIN_VELOCITY_TO_POSITION_BACK mean ChatHead start bouncing back to screen sooner
+        MIN_VELOCITY_TO_POSITION_BACK = ChatHeadUtils.dpToPx(container.getDisplayMetrics(), 1200);
         MAX_VELOCITY_FOR_IDLING = ChatHeadUtils.dpToPx(container.getDisplayMetrics(), 1);
         int heroIndex = 0;
         this.extras = extras;

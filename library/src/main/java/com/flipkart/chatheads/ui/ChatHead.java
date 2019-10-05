@@ -11,6 +11,8 @@ import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.ViewConfiguration;
 import android.widget.ImageView;
+//import android.widget.ImageView;
+import android.support.v7.widget.AppCompatImageView;
 
 import com.facebook.rebound.SimpleSpringListener;
 import com.facebook.rebound.Spring;
@@ -24,7 +26,7 @@ import java.io.Serializable;
  * Created by kirankumar on 10/02/15.
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class ChatHead<T extends Serializable> extends ImageView implements SpringListener {
+public class ChatHead<T extends Serializable> extends AppCompatImageView implements SpringListener {
 
     final int CLOSE_ATTRACTION_THRESHOLD = ChatHeadUtils.dpToPx(getContext(), 110);
     private final int touchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
