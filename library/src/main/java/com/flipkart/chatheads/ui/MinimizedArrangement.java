@@ -110,7 +110,10 @@ public class MinimizedArrangement<T extends Serializable> extends ChatHeadArrang
             heroIndex = 0;
         }
         int zIndex = 0;
-        if (heroIndex < chatHeads.size()) {
+        if(chatHeads.size()==0) {
+            hero = null;
+        }
+        if (chatHeads.size()>0 && heroIndex < chatHeads.size()) {
             hero = chatHeads.get(heroIndex);
             hero.setHero(true);
             horizontalSpringChain = SpringChain.create();
@@ -358,7 +361,7 @@ public class MinimizedArrangement<T extends Serializable> extends ChatHeadArrang
     }
 
     private Integer getHeroIndex(ChatHead hero) {
-        int heroIndex = 0;
+        int heroIndex = -1;
         List<ChatHead<T>> chatHeads = manager.getChatHeads();
         int i = 0;
         for (ChatHead chatHead : chatHeads) {

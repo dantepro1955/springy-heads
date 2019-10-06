@@ -190,7 +190,9 @@ public class WindowManagerContainer extends FrameChatHeadContainer {
             // about to be maximized
             WindowManager.LayoutParams layoutParams = getOrCreateLayoutParamsForContainer(motionCaptureView);
             layoutParams.flags |= FLAG_NOT_FOCUSABLE | FLAG_NOT_TOUCHABLE;
-            windowManager.updateViewLayout(motionCaptureView, layoutParams);
+            if(motionCaptureViewAdded) {
+                windowManager.updateViewLayout(motionCaptureView, layoutParams);
+            }
 
             layoutParams = getOrCreateLayoutParamsForContainer(getFrameLayout());
             layoutParams.flags &= ~FLAG_NOT_FOCUSABLE; //add focusability
@@ -198,11 +200,12 @@ public class WindowManagerContainer extends FrameChatHeadContainer {
             layoutParams.flags |= FLAG_NOT_TOUCH_MODAL;
 
             windowManager.updateViewLayout(getFrameLayout(), layoutParams);
-
-            setContainerX(motionCaptureView, 0);
-            setContainerY(motionCaptureView, 0);
-            setContainerWidth(motionCaptureView, getFrameLayout().getMeasuredWidth());
-            setContainerHeight(motionCaptureView, getFrameLayout().getMeasuredHeight());
+            if(motionCaptureViewAdded) {
+                setContainerX(motionCaptureView, 0);
+                setContainerY(motionCaptureView, 0);
+                setContainerWidth(motionCaptureView, getFrameLayout().getMeasuredWidth());
+                setContainerHeight(motionCaptureView, getFrameLayout().getMeasuredHeight());
+            }
 
         } else {
             // about to be minimized
@@ -210,7 +213,9 @@ public class WindowManagerContainer extends FrameChatHeadContainer {
             layoutParams.flags |= FLAG_NOT_FOCUSABLE; //remove focusability
             layoutParams.flags &= ~FLAG_NOT_TOUCHABLE; //add touch
             layoutParams.flags |= FLAG_NOT_TOUCH_MODAL; //add touch
-            windowManager.updateViewLayout(motionCaptureView, layoutParams);
+            if(motionCaptureViewAdded) {
+                windowManager.updateViewLayout(motionCaptureView, layoutParams);
+            }
 
             layoutParams = getOrCreateLayoutParamsForContainer(getFrameLayout());
             layoutParams.flags |= FLAG_NOT_FOCUSABLE | FLAG_NOT_TOUCHABLE;

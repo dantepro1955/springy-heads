@@ -63,6 +63,10 @@ public class MaximizedArrangement<T extends Serializable> extends ChatHeadArrang
         if (heroIndex < 0 || heroIndex > chatHeads.size() - 1) {
             heroIndex = 0;
         }
+        // TODO: If active MaximizedArrangement but chatHeads.size() = 0 --> user should enable to touch
+        if(chatHeads.size() == 0) {
+            currentChatHead = null;
+        }
         if (chatHeads.size() > 0 && heroIndex < chatHeads.size()) {
             currentChatHead = chatHeads.get(heroIndex);
             maxDistanceFromOriginal = (int) MAX_DISTANCE_FROM_ORIGINAL;
@@ -107,7 +111,10 @@ public class MaximizedArrangement<T extends Serializable> extends ChatHeadArrang
                     if (isTransitioning) {
                         isTransitioning = false;
                     }
-                    currentChatHead.getVerticalSpring().removeListener(this);
+                    Spring verticalSpring = currentChatHead.getVerticalSpring();
+                    if(verticalSpring != null) {
+                        verticalSpring.removeListener(this);
+                    }
                 }
             });
             currentChatHead.getHorizontalSpring().addListener(new SimpleSpringListener() {
@@ -117,7 +124,10 @@ public class MaximizedArrangement<T extends Serializable> extends ChatHeadArrang
                     if (isTransitioning) {
                         isTransitioning = false;
                     }
-                    currentChatHead.getHorizontalSpring().removeListener(this);
+                    Spring horizontalSpring = currentChatHead.getHorizontalSpring();
+                    if(horizontalSpring != null) {
+                        horizontalSpring.removeListener(this);
+                    }
                 }
             });
         }
@@ -418,7 +428,7 @@ public class MaximizedArrangement<T extends Serializable> extends ChatHeadArrang
      */
     @Override
     public Integer getHeroIndex() {
-        int heroIndex = 0;
+        int heroIndex = -1;
         List<ChatHead<T>> chatHeads = manager.getChatHeads();
         int i = 0;
         for (ChatHead<T> chatHead : chatHeads) {
